@@ -22,12 +22,23 @@
         <!-- Product Image -->
         <div class="col-md-5 bg-light d-flex align-items-center justify-content-center p-4 border-end" style="min-height: 400px;">
             {% if product.image_url %}
-            <img src="{{ product.image_url }}" alt="{{ product.product_name }}" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
+            <img src="{{ product.image_url }}" alt="{{ product.product_name }}" class="img-fluid rounded shadow-sm" style="max-height: 400px; width: 100%; object-fit: cover;">
             {% else %}
-            <div class="text-center text-muted">
-                <i class="fas fa-box-open fa-6x mb-3 opacity-25"></i>
-                <h5 class="opacity-50">Chưa tải ảnh</h5>
-            </div>
+
+            {% set product_image_map = {
+                1: 'ao.jpg',
+                2: 'mockhoa.jpg',
+                3: 'mu.jpg'
+            } %}
+            {% set prod_file = product_image_map.get(product.id) %}
+
+            {% if prod_file %}
+            <img src="{{ url_for('static', filename='images/' ~ prod_file) }}" alt="{{ product.product_name }}" class="img-fluid rounded shadow-sm" style="max-height: 400px; width: 100%; object-fit: cover;">
+
+            {% else %}
+            <img src="https://picsum.photos/seed/detail{{ product.id }}/500/500" alt="Ảnh mặc định" class="img-fluid rounded shadow-sm" style="max-height: 400px; width: 100%; object-fit: cover;">
+            {% endif %}
+
             {% endif %}
         </div>
         
