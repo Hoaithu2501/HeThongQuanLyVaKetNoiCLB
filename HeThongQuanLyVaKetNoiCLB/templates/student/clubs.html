@@ -31,10 +31,24 @@
 <div class="row g-4" id="clubGrid">
     {% for club in clubs %}
     <div class="col-md-6 col-xl-4 club-item">
-        <div class="card h-100 border-0 overflow-hidden group shadow-sm">
-            <!-- Compact Card Header -->
-            <div class="position-relative" style="height: 90px; background: linear-gradient(135deg, #3B82F6, #1E3A8A);">
-                <div class="position-absolute bottom-0 start-0 p-3 translate-middle-y mt-4 ms-2">
+      <div class="card h-100 border-0 overflow-hidden group shadow-sm">
+
+            {% set clb_image_map = {
+                1: 'clb1.jpg',
+                2: 'clb2.jpg',
+                3: 'clb3.jpg',
+                4: 'clb4.jpg',
+                5: 'clb5.jpg',
+                6: 'clb6.jpg',
+                7: 'clb7.jpg'
+            } %}
+            {% set clb_filename = clb_image_map.get(club.id, 'clb_default.jpg') %}
+
+            <div class="position-relative" style="height: 120px; background-image: url('{{ url_for('static', filename='images/' ~ clb_filename) }}'); background-size: cover; background-position: center;">
+
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
+
+                <div class="position-absolute bottom-0 start-0 p-3 translate-middle-y mt-4 ms-2" style="z-index: 2;">
                     {% if club.logo_url %}
                     <img src="{{ club.logo_url }}" class="rounded-3 border border-2 border-white shadow-sm bg-white" style="width: 54px; height: 54px; object-fit: cover;">
                     {% else %}
